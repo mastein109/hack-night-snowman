@@ -2,11 +2,13 @@ class SnowmanGame
   attr_reader :word
   attr_reader :snowmanImage
   attr_accessor :wrongGuesses
+  attr_accessor :correctGuesses
 
   def initialize
     puts "Player 1 enter a word"
     @word = gets.chomp
     @wrongGuesses = 0
+    @correctGuesses = []
   end
 
   def displaySnowman
@@ -22,7 +24,7 @@ class SnowmanGame
 
   def meltingMan(wrongGuesses)
     meltingMan = @snowmanImage.lines
-    puts meltingMan.length-wrongGuesses
+    puts meltingMan[0...meltingMan.length-wrongGuesses]
   end
 
   def processGuess!
@@ -36,15 +38,12 @@ class SnowmanGame
   end
 
   def checkGuess(guess)
-    correctGuesses = []
-    @word.split(//).each do |letter|
-      if guess == letter
-        correctGuesses << letter
-      else
-        @wrongGuesses += 1
-      end
-      puts correctGuesses
+    if @word.split(//).include?(guess)
+      @correctGuesses << guess
+    else
+      @wrongGuesses += 1
     end
+    # puts correctGuesses
     meltingMan(wrongGuesses)
   end
 
